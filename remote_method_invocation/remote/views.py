@@ -31,8 +31,11 @@ def rmi_post(request):
             'status': 200
         }
         return HttpResponse(content=json.dumps(payload), content_type='application/json')
+    try:
+        body = json.loads(request.body)
+    except ValueError, AttributeError:
+        body = {}
 
-    body = json.loads(request.body)
     payload = dict(
         zip(
             [
