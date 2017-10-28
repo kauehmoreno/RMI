@@ -10,14 +10,17 @@ def proxy_rmi_middleware(get_response):
         #before
 
         if request.method == 'POST':
-            redirect_url = '{}/{}/'.format(settings.BASE_URL, 'post')
-            request.META['REMOTE_ADDR'] = redirect_url
-            request.META['PATH_INFO'] = redirect_url
             request.META['RMI'] = ('post')
             # return HttpResponsePermanentRedirect(reverse('post'))
         response = get_response(request)
+        try:
+            request.META['RMI']
+        except KeyError:
+            try:
+                request.META['HTTP_RMI']
+            except KeyError:
+                return response
         rmi_response = rmi_post(request)
-
         return rmi_response
 
     return middleware
