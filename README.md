@@ -37,7 +37,7 @@ para ele no request.
 
 
 #### envio
-```
+```json
 {
   "foto": "img/kaueh.png",
   "curso": "Ciencia da computacao",
